@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Participation Portfolio</title>
+<style>
+:root{
+  --bg:#06050a;--card:#0f0b15;--card2:#171120;--ink:#fbeaf5;--muted:#a592b3;--line:#2b1d3a;
+  --neon:#ff2e9a;--neon2:#ff7ac8;--glow:0 0 12px rgba(255,46,154,.55),0 0 32px rgba(255,46,154,.25);
+  --green:#4dffb0;--amber:#ffb454;--red:#ff5470;
+  --c0:#ff2e9a;--c1:#ff9ad5;--c2:#c026d3;--c3:#8b5cf6;--r:12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;color:var(--ink);font:15px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif;
+  background:
+   radial-gradient(900px 500px at 85% -10%,rgba(255,46,154,.22),transparent 60%),
+   radial-gradient(700px 400px at -10% 30%,rgba(139,92,246,.14),transparent 60%),
+   linear-gradient(rgba(255,46,154,.045) 1px,transparent 1px) 0 0/44px 44px,
+   linear-gradient(90deg,rgba(255,46,154,.045) 1px,transparent 1px) 0 0/44px 44px,var(--bg);
+  background-attachment:fixed}
+:focus-visible{outline:2px solid var(--neon2);outline-offset:2px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+
+.bar{position:sticky;top:0;z-index:5;background:rgba(6,5,10,.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1100px;margin:auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:.95rem;color:var(--neon);text-shadow:0 0 14px rgba(255,46,154,.8)}
+.brand i{font-style:normal;color:var(--ink)}
+.btn{border:1.5px solid var(--neon);background:transparent;color:var(--neon2);padding:9px 18px;border-radius:8px;font-weight:700;transition:.2s}
+.btn:hover{background:rgba(255,46,154,.14);box-shadow:var(--glow)}
+.btn.primary{background:var(--neon);color:#16000d;box-shadow:var(--glow)}
+.btn.primary:hover{background:var(--neon2);transform:translateY(-1px)}
+.btn.sm{padding:7px 14px;font-size:.85rem}
+kbd{border:1px solid var(--line);border-radius:5px;padding:0 6px;font-size:.75rem;color:var(--muted)}
+
+main{max-width:1100px;margin:auto;padding:34px 24px 60px}
+h1{font-size:clamp(1.7rem,4vw,2.4rem);letter-spacing:-.02em;margin:0 0 4px}
+h1 span{color:var(--neon);text-shadow:0 0 18px rgba(255,46,154,.7)}
+h2{font-size:1.05rem;margin:0 0 16px}
+.lead{color:var(--muted);margin:0 0 26px;max-width:62ch}
+
+.card,.stat{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;transition:border-color .25s,box-shadow .25s;overflow:hidden}
+.card::before,.stat::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .25s;
+  background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(255,46,154,.18),transparent 70%)}
+.card:hover,.stat:hover{border-color:rgba(255,46,154,.55);box-shadow:0 0 24px rgba(255,46,154,.12)}
+.card:hover::before,.stat:hover::before{opacity:1}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
+.stat{text-align:left;padding:18px 20px;color:inherit}
+.stat b{display:block;font-size:2.2rem;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--neon2);text-shadow:0 0 16px rgba(255,46,154,.55)}
+.stat span{color:var(--muted);font-size:.88rem}
+.stat.on{border-color:var(--neon);box-shadow:var(--glow)}
+
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px}
+.bars{display:grid;gap:8px}
+.bar-row{display:grid;grid-template-columns:100px 1fr 30px;gap:12px;align-items:center;font-size:.92rem;background:none;border:1px solid transparent;border-radius:8px;padding:6px 8px;text-align:left;width:100%}
+.bar-row:hover,.bar-row.on{border-color:var(--neon);background:rgba(255,46,154,.07)}
+.bar-row b{text-align:right;font-variant-numeric:tabular-nums}
+.track{height:9px;background:#24192f;border-radius:99px;overflow:hidden}
+.fill{display:block;height:100%;border-radius:99px;transition:width .5s;box-shadow:0 0 10px currentColor}
+.ring-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.ring{--p:0;width:136px;height:136px;border-radius:50%;display:grid;place-items:center;filter:drop-shadow(0 0 10px rgba(255,46,154,.55));
+  background:conic-gradient(var(--neon) calc(var(--p)*1%),#24192f 0);transition:background .5s}
+.ring span{width:102px;height:102px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-size:1.5rem;font-weight:800}
+.muted{color:var(--muted);font-size:.9rem}
+
+.head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.head h2{margin:0}.head div{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tools{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+input,select,textarea{width:100%;background:#0a0710;border:1px solid var(--line);border-radius:8px;padding:9px 12px}
+input:focus,select:focus,textarea:focus{border-color:var(--neon);box-shadow:0 0 0 3px rgba(255,46,154,.2);outline:none}
+option{background:#0f0b15}
+.wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{width:100%;border-collapse:collapse;min-width:800px}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--neon2);background:rgba(255,46,154,.06)}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:rgba(255,46,154,.07)}
+tbody tr:last-child td{border-bottom:0}
+tbody tr.new{animation:pop .6s}
+@keyframes pop{from{background:rgba(255,46,154,.35)}}
+td small{display:block;color:var(--muted)}
+td .track{width:100px}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:.78rem;font-weight:700;color:#14000c}
+.badge{border:1px solid;background:none;padding:3px 12px;border-radius:99px;font-size:.78rem;font-weight:700;transition:.2s}
+.badge:hover{transform:scale(1.07);box-shadow:0 0 12px currentColor}
+.s-Planned{color:#b9a6c9}.s-In-progress{color:var(--amber)}.s-Completed{color:var(--green)}
+.link{background:none;border:0;color:var(--neon2);font-weight:700;padding:2px 6px}
+.link:hover{text-decoration:underline;text-shadow:0 0 10px var(--neon)}.link.del{color:var(--red)}
+.empty{display:none;text-align:center;padding:36px 16px;color:var(--muted)}
+.hint{color:var(--muted);font-size:.8rem;margin:12px 0 0}
+
+dialog{border:1px solid var(--neon);border-radius:14px;padding:0;width:min(640px,94vw);background:var(--card);color:var(--ink);box-shadow:var(--glow)}
+dialog[open]{animation:in .25s}
+@keyframes in{from{opacity:0;transform:translateY(14px) scale(.98)}}
+dialog::backdrop{background:rgba(3,1,8,.75);backdrop-filter:blur(3px)}
+form{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+form h2{grid-column:1/-1;margin:0;color:var(--neon)}
+.f{display:flex;flex-direction:column;gap:4px}.f.w{grid-column:1/-1}
+label{font-weight:600;font-size:.88rem}
+.err{color:var(--red);font-size:.82rem;min-height:1em}
+.f.bad input,.f.bad select,.f.bad textarea{border-color:var(--red)}
+.f.bad{animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.acts{grid-column:1/-1;display:flex;justify-content:flex-end;gap:10px}
+input[type=range]{padding:0;accent-color:var(--neon);background:none;border:0}
+output{color:var(--neon2);font-weight:700}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,30px);opacity:0;pointer-events:none;padding:11px 20px;border-radius:8px;font-weight:700;transition:.25s;z-index:20;max-width:92vw;background:#0f0b15;border:1px solid}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.ok{color:var(--neon2);border-color:var(--neon);box-shadow:var(--glow)}
+.toast.no{color:var(--red);border-color:var(--red)}
+.dot{position:fixed;width:8px;height:8px;border-radius:50%;pointer-events:none;z-index:30}
+
+@media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.tools{grid-template-columns:1fr 1fr}.tools input{grid-column:1/-1}}
+@media(max-width:640px){
+  .bar-in,main{padding-left:16px;padding-right:16px}
+  form,.tools{grid-template-columns:1fr}
+  table{min-width:0}thead{position:absolute;left:-9999px}
+  tr,td{display:block}tr{padding:10px 0;border-bottom:1px solid var(--line)}tbody tr:last-child{border-bottom:0}
+  td{border:0;padding:4px 14px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  td::before{content:attr(data-l);color:var(--muted);font-size:.8rem;font-weight:600}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="bar"><div class="bar-in">
+  <span class="brand">Participation<i>.</i>Portfolio</span>
+  <button class="btn primary" id="openAdd" type="button">+ Add activity</button>
+</div></header>
+
+<main>
+  <h1>Your <span>activity</span> summary</h1>
+  <p class="lead">Log workshops, competitions, volunteering and club work. Click any card or bar to filter, and click a status badge to move an activity forward.</p>
+
+  <section class="stats" aria-label="Summary">
+    <button class="stat" data-st="" type="button"><b id="sTotal">0</b><span>Activities logged</span></button>
+    <div class="stat"><b id="sHours">0</b><span>Hours contributed</span></div>
+    <button class="stat" data-st="Completed" type="button"><b id="sDone">0</b><span>Completed</span></button>
+    <button class="stat" data-st="In progress" type="button"><b id="sDoing">0</b><span>In progress</span></button>
+  </section>
+
+  <section class="grid2">
+    <div class="card"><h2>Activities by category</h2><div class="bars" id="catBars"></div></div>
+    <div class="card"><h2>Overall progress</h2>
+      <div class="ring-wrap"><div class="ring" id="ring"><span id="ringTxt">0%</span></div><p class="muted" id="ringSub"></p></div>
+    </div>
+  </section>
+
+  <section class="card" aria-labelledby="recTitle">
+    <div class="head"><h2 id="recTitle">My records</h2>
+      <div><span class="muted" id="count"></span>
+        <button class="btn sm" id="clear" type="button" hidden>Clear filters</button>
+        <button class="btn sm" id="export" type="button">Export CSV</button></div>
+    </div>
+    <div class="tools">
+      <input type="search" id="q" placeholder="Search title or organiser" aria-label="Search activities">
+      <select id="fCat" aria-label="Filter by category"><option value="">All categories</option></select>
+      <select id="fSta" aria-label="Filter by status"><option value="">All statuses</option></select>
+      <select id="sort" aria-label="Sort">
+        <option value="new">Newest first</option><option value="old">Oldest first</option>
+        <option value="hrs">Most hours</option><option value="az">Title A to Z</option>
+      </select>
+    </div>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>Activity</th><th>Category</th><th>Date</th><th>Hours</th><th>Status</th><th>Progress</th><th>Actions</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty"></div>
+    </div>
+    <p class="hint">Shortcuts: <kbd>/</kbd> search &nbsp; <kbd>N</kbd> new activity &nbsp; <kbd>Esc</kbd> close form</p>
+  </section>
+</main>
+
+<dialog id="dlg">
+  <form id="form" novalidate>
+    <h2 id="dlgTitle">Add activity</h2>
+    <div class="f w"><label for="title">Activity title</label>
+      <input id="title" name="title" required minlength="3" maxlength="80" placeholder="e.g. Web Development Workshop"><span class="err"></span></div>
+    <div class="f"><label for="category">Category</label>
+      <select id="category" name="category" required><option value="">Choose a category</option></select><span class="err"></span></div>
+    <div class="f"><label for="organizer">Organiser</label>
+      <input id="organizer" name="organizer" required maxlength="60" placeholder="e.g. Coding Club"><span class="err"></span></div>
+    <div class="f"><label for="date">Date</label>
+      <input id="date" name="date" type="date" required><span class="err"></span></div>
+    <div class="f"><label for="hours">Hours spent</label>
+      <input id="hours" name="hours" type="number" required min="0" max="500" step="1" placeholder="e.g. 6"><span class="err"></span></div>
+    <div class="f"><label for="status">Status</label>
+      <select id="status" name="status" required></select><span class="err"></span></div>
+    <div class="f" id="progBox"><label for="progress">Progress: <output id="progOut">50%</output></label>
+      <input id="progress" name="progress" type="range" min="5" max="95" step="5" value="50"></div>
+    <div class="f w"><label for="notes">What did you do or learn? <span class="muted" id="noteCt">0/300</span></label>
+      <textarea id="notes" name="notes" rows="3" maxlength="300"></textarea></div>
+    <div class="acts">
+      <button type="button" class="btn" id="cancel">Cancel</button>
+      <button type="submit" class="btn primary" id="saveBtn">Save activity</button>
+    </div>
+  </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const CATS = ["Workshop", "Competition", "Volunteering", "Club"];
+  const STATUSES = ["Planned", "In progress", "Completed"];
+  const KEY = "participation-portfolio-neon-v1";
+  const $ = id => document.getElementById(id);
+  const MSG = {
+    title: "Enter a title of 3 to 80 characters.", category: "Choose a category.",
+    organizer: "Enter who organised the activity.", date: "Choose a valid date.",
+    hours: "Enter whole hours between 0 and 500.", status: "Choose a status."
+  };
+  const seed = () => [
+    { id: 1, title: "Web Development Workshop", category: "Workshop", organizer: "Tech Society", date: "2026-09-12", hours: 6, status: "Completed", progress: 100, notes: "" },
+    { id: 2, title: "Smart India Hackathon", category: "Competition", organizer: "Ministry of Education", date: "2026-10-03", hours: 24, status: "In progress", progress: 60, notes: "" },
+    { id: 3, title: "Blood Donation Camp", category: "Volunteering", organizer: "NSS Unit", date: "2026-10-21", hours: 5, status: "Completed", progress: 100, notes: "" },
+    { id: 4, title: "Coding Club Weekly Sessions", category: "Club", organizer: "Coding Club", date: "2026-08-01", hours: 11, status: "In progress", progress: 40, notes: "" },
+    { id: 5, title: "UI/UX Design Contest", category: "Competition", organizer: "Design Guild", date: "2026-12-15", hours: 0, status: "Planned", progress: 0, notes: "" }
+  ];
+
+  let items = load(), editingId = null, newId = null;
+  function load() {
+    try { const r = localStorage.getItem(KEY); if (r) return JSON.parse(r); } catch (e) {}
+    return seed();
+  }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(items)); }
+    catch (e) { toast("Could not save to browser storage.", false); }
+  }
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const fmtDate = d => new Date(d + "T00:00:00").toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+  const catIdx = c => Math.max(0, CATS.indexOf(c));
+
+  let tt;
+  function toast(text, ok = true) {
+    const t = $("toast");
+    t.textContent = text; t.className = "toast show " + (ok ? "ok" : "no");
+    clearTimeout(tt); tt = setTimeout(() => t.classList.remove("show"), 2800);
+  }
+
+  function burst(x, y) {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const cols = ["#ff2e9a", "#ff7ac8", "#ffffff", "#c026d3", "#4dffb0"];
+    for (let i = 0; i < 26; i++) {
+      const d = document.createElement("i");
+      d.className = "dot"; d.style.left = x + "px"; d.style.top = y + "px";
+      d.style.background = cols[i % cols.length]; d.style.boxShadow = "0 0 8px " + cols[i % cols.length];
+      document.body.appendChild(d);
+      const a = Math.random() * Math.PI * 2, v = 60 + Math.random() * 110;
+      d.animate([{ transform: "translate(0,0)", opacity: 1 },
+        { transform: `translate(${Math.cos(a) * v}px,${Math.sin(a) * v + 50}px)`, opacity: 0 }],
+        { duration: 800 + Math.random() * 400, easing: "cubic-bezier(.2,.7,.3,1)" }).onfinish = () => d.remove();
+    }
+  }
+
+  const shown = {};
+  function countUp(el, to) {
+    const from = shown[el.id] || 0; shown[el.id] = to;
+    if (from === to || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.textContent = to; return; }
+    const t0 = performance.now();
+    const step = t => {
+      const p = Math.min(1, (t - t0) / 600);
+      el.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  function renderSummary() {
+    const total = items.length;
+    const done = items.filter(i => i.status === "Completed").length;
+    const doing = items.filter(i => i.status === "In progress").length;
+    const hours = items.reduce((n, i) => n + (Number(i.hours) || 0), 0);
+    const pct = total ? Math.round(items.reduce((n, i) => n + i.progress, 0) / total) : 0;
+    countUp($("sTotal"), total); countUp($("sHours"), hours); countUp($("sDone"), done); countUp($("sDoing"), doing);
+    $("ring").style.setProperty("--p", pct);
+    $("ringTxt").textContent = pct + "%";
+    $("ringSub").textContent = total ? `${done} of ${total} activities completed` : "No activities yet";
+    const max = Math.max(1, ...CATS.map(c => items.filter(i => i.category === c).length));
+    $("catBars").innerHTML = CATS.map((c, k) => {
+      const n = items.filter(i => i.category === c).length;
+      return `<button type="button" class="bar-row${$("fCat").value === c ? " on" : ""}" data-cat="${c}"><span>${c}</span><div class="track"><i class="fill" style="width:${n / max * 100}%;background:var(--c${k});color:var(--c${k})"></i></div><b>${n}</b></button>`;
+    }).join("");
+    document.querySelectorAll(".stat[data-st]").forEach(b => b.classList.toggle("on", b.dataset.st !== "" && b.dataset.st === $("fSta").value));
+  }
+
+  function renderRows() {
+    const q = $("q").value.trim().toLowerCase(), cat = $("fCat").value, sta = $("fSta").value, s = $("sort").value;
+    const list = items
+      .filter(i => (!q || (i.title + " " + i.organizer).toLowerCase().includes(q)) && (!cat || i.category === cat) && (!sta || i.status === sta))
+      .sort((a, b) => s === "old" ? a.date.localeCompare(b.date) : s === "hrs" ? b.hours - a.hours : s === "az" ? a.title.localeCompare(b.title) : b.date.localeCompare(a.date));
+    $("count").textContent = `${list.length} of ${items.length} shown`;
+    $("clear").hidden = !(q || cat || sta);
+    $("rows").innerHTML = list.map(i => `
+      <tr class="${i.id === newId ? "new" : ""}">
+        <td data-l="Activity"><strong>${esc(i.title)}</strong><small>${esc(i.organizer)}</small></td>
+        <td data-l="Category"><span class="pill" style="background:var(--c${catIdx(i.category)})">${i.category}</span></td>
+        <td data-l="Date">${fmtDate(i.date)}</td>
+        <td data-l="Hours">${i.hours}</td>
+        <td data-l="Status"><button class="badge s-${i.status.replace(" ", "-")}" data-next="${i.id}" title="Click to move to the next status">${i.status}</button></td>
+        <td data-l="Progress"><div class="track" title="${i.progress}%"><i class="fill" style="width:${i.progress}%;background:${i.status === "Completed" ? "var(--green)" : "var(--neon)"};color:${i.status === "Completed" ? "var(--green)" : "var(--neon)"}"></i></div></td>
+        <td data-l="Actions"><button class="link" data-edit="${i.id}">Edit</button><button class="link del" data-del="${i.id}">Delete</button></td>
+      </tr>`).join("");
+    newId = null;
+    const e = $("empty");
+    e.style.display = list.length ? "none" : "block";
+    e.textContent = items.length ? "No activities match. Clear the filters to see everything." : "Nothing here yet. Click Add activity to log your first one.";
+  }
+  const render = () => { renderSummary(); renderRows(); };
+
+  /* Form */
+  const form = $("form"), dlg = $("dlg");
+  function setError(el, text) {
+    const f = el.closest(".f"); if (!f) return;
+    f.classList.remove("bad"); void f.offsetWidth; f.classList.toggle("bad", !!text);
+    const er = f.querySelector(".err"); if (er) er.textContent = text || "";
+  }
+  function validateField(el) {
+    if (!el.name || el.type === "range" || el.name === "notes") return true;
+    const ok = el.checkValidity(); setError(el, ok ? "" : MSG[el.name]); return ok;
+  }
+  function syncForm() {
+    $("progBox").style.display = $("status").value === "In progress" ? "flex" : "none";
+    $("progOut").textContent = $("progress").value + "%";
+    $("noteCt").textContent = $("notes").value.length + "/300";
+  }
+  function openForm(item) {
+    editingId = item ? item.id : null; form.reset();
+    [...form.elements].forEach(el => el.closest(".f") && setError(el, ""));
+    $("dlgTitle").textContent = item ? "Edit activity" : "Add activity";
+    $("saveBtn").textContent = item ? "Save changes" : "Save activity";
+    if (item) {
+      ["title", "category", "organizer", "date", "hours", "status", "notes"].forEach(k => form.elements[k].value = item[k]);
+      $("progress").value = Math.min(95, Math.max(5, item.progress || 50));
+    } else $("status").value = "Planned";
+    syncForm(); dlg.showModal(); $("title").focus();
+  }
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    const bad = [...form.elements].filter(el => !validateField(el));
+    if (bad.length) { bad[0].focus(); toast("Not saved. Fix the highlighted fields.", false); return; }
+    const fd = Object.fromEntries(new FormData(form)), status = fd.status;
+    const rec = {
+      title: fd.title.trim(), category: fd.category, organizer: fd.organizer.trim(), date: fd.date,
+      hours: Number(fd.hours), status, notes: (fd.notes || "").trim(),
+      progress: status === "Completed" ? 100 : status === "Planned" ? 0 : Number($("progress").value)
+    };
+    if (editingId) { items = items.map(i => i.id === editingId ? { ...i, ...rec } : i); newId = editingId; toast("Changes saved."); }
+    else { newId = Date.now(); items.push({ id: newId, ...rec }); toast("Activity added to your records."); }
+    save(); render(); dlg.close();
+  });
+  form.addEventListener("focusout", e => { if (e.target.name) validateField(e.target); });
+  ["status", "progress", "notes"].forEach(id => $(id).addEventListener("input", syncForm));
+  $("openAdd").addEventListener("click", () => openForm());
+  $("cancel").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("click", e => { if (e.target === dlg) dlg.close(); });
+
+  /* Table actions */
+  $("rows").addEventListener("click", e => {
+    const ed = e.target.closest("[data-edit]"), de = e.target.closest("[data-del]"), nx = e.target.closest("[data-next]");
+    if (ed) openForm(items.find(i => i.id === Number(ed.dataset.edit)));
+    if (de) {
+      const it = items.find(i => i.id === Number(de.dataset.del));
+      if (it && confirm(`Delete "${it.title}"? This cannot be undone.`)) { items = items.filter(i => i.id !== it.id); save(); render(); toast("Activity deleted."); }
+    }
+    if (nx) {
+      const it = items.find(i => i.id === Number(nx.dataset.next));
+      it.status = STATUSES[(STATUSES.indexOf(it.status) + 1) % 3];
+      it.progress = it.status === "Completed" ? 100 : it.status === "Planned" ? 0 : 50;
+      newId = it.id; save();
+      const r = nx.getBoundingClientRect();
+      render();
+      if (it.status === "Completed") { burst(r.left + r.width / 2, r.top + r.height / 2); toast("Completed. Nice work!"); }
+      else toast(`Moved to ${it.status}.`);
+    }
+  });
+
+  /* Filters */
+  ["q", "fCat", "fSta", "sort"].forEach(id => $(id).addEventListener("input", render));
+  $("catBars").addEventListener("click", e => {
+    const b = e.target.closest("[data-cat]"); if (!b) return;
+    $("fCat").value = $("fCat").value === b.dataset.cat ? "" : b.dataset.cat; render();
+  });
+  document.querySelectorAll(".stat[data-st]").forEach(b => b.addEventListener("click", () => {
+    $("fSta").value = $("fSta").value === b.dataset.st ? "" : b.dataset.st; render();
+    $("recTitle").scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+  $("clear").addEventListener("click", () => { $("q").value = ""; $("fCat").value = ""; $("fSta").value = ""; render(); });
+
+  /* Export */
+  $("export").addEventListener("click", () => {
+    if (!items.length) { toast("Nothing to export yet.", false); return; }
+    const q = v => `"${String(v).replace(/"/g, '""')}"`;
+    const rows = [["Title", "Category", "Organiser", "Date", "Hours", "Status", "Progress", "Notes"],
+      ...items.map(i => [i.title, i.category, i.organizer, i.date, i.hours, i.status, i.progress + "%", i.notes])];
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(new Blob([rows.map(r => r.map(q).join(",")).join("\n")], { type: "text/csv" }));
+    a.download = "participation-portfolio.csv"; a.click(); URL.revokeObjectURL(a.href);
+    toast("CSV downloaded.");
+  });
+
+  /* Cursor glow on cards, keyboard shortcuts */
+  document.addEventListener("mousemove", e => {
+    const c = e.target.closest && e.target.closest(".card,.stat"); if (!c) return;
+    const r = c.getBoundingClientRect();
+    c.style.setProperty("--mx", e.clientX - r.left + "px"); c.style.setProperty("--my", e.clientY - r.top + "px");
+  });
+  document.addEventListener("keydown", e => {
+    if (dlg.open || /INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || e.metaKey || e.ctrlKey) return;
+    if (e.key === "/") { e.preventDefault(); $("q").focus(); }
+    if (e.key.toLowerCase() === "n") { e.preventDefault(); openForm(); }
+  });
+
+  /* Init */
+  const opt = v => `<option value="${v}">${v}</option>`;
+  $("fCat").insertAdjacentHTML("beforeend", CATS.map(opt).join(""));
+  $("fSta").insertAdjacentHTML("beforeend", STATUSES.map(opt).join(""));
+  $("category").insertAdjacentHTML("beforeend", CATS.map(opt).join(""));
+  $("status").innerHTML = STATUSES.map(opt).join("");
+  render();
+})();
+</script>
+</body>
+</html>
